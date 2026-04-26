@@ -121,19 +121,20 @@ h1 {
   margin: 0;
   font-size: clamp(2rem, 3vw, 2.4rem);
 }
-.repo-list {
+.repo-grid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1rem;
 }
 .repo-item {
   border: 1px solid #1f2937;
   border-radius: 12px;
   background: #111827;
-  padding: 1rem 1.1rem;
+  padding: 1.5rem;
+  transition: border-color 0.18s ease;
 }
 .repo-item:hover {
   border-color: #2563eb;
