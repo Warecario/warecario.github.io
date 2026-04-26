@@ -1,8 +1,6 @@
 const username = 'Warecario';
 const repoGrid = document.getElementById('repoGrid');
 const repoStatus = document.getElementById('repoStatus');
-const repoStatus = document.getElementById('repoStatus');
-const repoStatus = document.getElementById('repoStatus');
 
 async function fetchRepos() {
   const endpoint = `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`;
@@ -20,18 +18,13 @@ async function fetchRepos() {
       .filter(repo => !ignored.includes(repo.name.toLowerCase()))
       .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
       .slice(0, 12);
-if (repoStatus) repoStatus.style.display = 'none';
-      return;
-    }
 
-    if (repoStatus) repoStatus.style.display = 'none';      repoGrid.innerHTML = '<div class="repo-item">No public repositories available right now.</div>';
-    if (repoStatus) repoStatus.textContent = 'Failed to load repos';
+    if (!filtered.length) {
+      repoGrid.innerHTML = '<div class="repo-item">No public repositories available right now.</div>';
       if (repoStatus) repoStatus.style.display = 'none';
       return;
-    if (repoStatus) repoStatus.style.display = 'none';
     }
 
-    if (repoStatus) repoStatus.textContent = 'Failed to load repos';
     if (repoStatus) repoStatus.style.display = 'none';
     renderRepos(filtered);
   } catch (error) {
