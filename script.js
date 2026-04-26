@@ -1,11 +1,10 @@
 const username = 'Warecario';
 const repoGrid = document.getElementById('repoGrid');
-const repoStatus = document.getElementById('repoStatus');
-const refreshButton = document.getElementById('refreshButton');
 
 async function fetchRepos() {
   const endpoint = `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`;
   repoStatus.textContent = 'Fetching repos...';
+
 
   try {
     const response = await fetch(endpoint, { cache: 'no-store' });
@@ -23,12 +22,24 @@ async function fetchRepos() {
 
     if (!filtered.length) {
       repoGrid.innerHTML = '<li class="repo-item">No public repositories available right now.</li>';
-      repoStatus.textContent = 'No repos found.';
       return;
     }
 
-    renderRepos(filtered);
-    repoStatus.textContent = `Showing ${filtered.length} repos.`;
+    // Fetch pages info for each repo
+    const reposWithPages = await Promise.all(filtered.map(async (repo) => {
+      try {
+        const detailResponse = await fetch(`https://api.github.com/repos/${username}/${repo.name}`, { cache: 'no-store' });
+        if (detailResponse.ok) {
+          const detail = await detailResponse.json();
+          return { ...repo, pages: detail.pages };
+        }
+      } catch (e) {
+        console.warn(`Failed to fetch details for ${repo.name}`);
+      }
+      return repo;
+    }));
+
+    renderRepos(reposWithPages);
   } catch (error) {
     repoGrid.innerHTML = `
       <li class="repo-item">
@@ -37,10 +48,7 @@ async function fetchRepos() {
           <p>Try again later or open the GitHub profile directly.</p>
         </a>
       </li>
-    `;
-    repoStatus.textContent = 'Unable to load repos.';
-    console.error(error);
-  }
+    `
 }
 
 function renderRepos(repos) {
@@ -55,11 +63,6 @@ function renderRepos(repos) {
         <a href="${linkUrl}" target="_blank" rel="noreferrer">
           <h3>${repo.name}</h3>
           <p>${description}</p>
-          <div class="repo-meta">
-            <span class="repo-pill"><span></span>${languageLabel}</span>
-            <span class="repo-pill"><span></span>★ ${repo.stargazers_count}</span>
-            <span class="repo-pill"><span></span>Forks ${repo.forks_count}</span>
-          </div>
           <div class="status-bar">Updated ${updated}</div>
         </a>
       </li>
