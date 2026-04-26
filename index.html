@@ -1,12 +1,451 @@
 <!DOCTYPE html>
-<html>
-<head><title>Warecario (And Others)'s Projects</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Warecario • GitHub Projects</title>
+  <meta name="description" content="Dynamic GitHub repository gallery for Warecario with live updates and a polished visual style." />
+  <style>
+    :root {
+      color-scheme: dark;
+      color: #f3f4ff;
+      background: #070b18;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-smooth: always;
+      text-rendering: optimizeLegibility;
+      line-height: 1.6;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      min-height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: radial-gradient(circle at top, rgba(94, 97, 255, 0.22), transparent 22%),
+                  radial-gradient(circle at 20% 30%, rgba(0, 250, 255, 0.16), transparent 18%),
+                  linear-gradient(180deg, #02040a 0%, #0c1126 100%);
+      overflow-x: hidden;
+    }
+    .page-shell {
+      min-height: 100vh;
+      padding: 3rem 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: relative;
+    }
+    .hero {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2.5rem;
+      border-radius: 32px;
+      background: rgba(10, 16, 33, 0.82);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(18px);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 10% 10%, rgba(121, 84, 255, 0.21), transparent 25%),
+                  radial-gradient(circle at 85% 20%, rgba(0, 245, 255, 0.16), transparent 18%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8ca5ff;
+      margin-bottom: 1rem;
+    }
+    .eyebrow span {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #6f7dff;
+      display: inline-block;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.8rem, 5vw, 4.6rem);
+      letter-spacing: -0.04em;
+      max-width: 12ch;
+    }
+    .hero p {
+      margin: 1.4rem 0 0;
+      max-width: 760px;
+      color: #cfd7ff;
+      font-size: 1.05rem;
+      line-height: 1.85;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 3rem;
+      padding: 0 1.35rem;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.24s ease, background-color 0.24s ease, border-color 0.24s ease;
+      cursor: pointer;
+      color: inherit;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+    }
+    .button:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.14);
+    }
+    .button.primary {
+      color: #ffffff;
+      background: linear-gradient(135deg, #6f7dff 0%, #00d3ff 100%);
+      border-color: rgba(111,125,255,0.5);
+      box-shadow: 0 18px 40px rgba(75, 103, 255, 0.18);
+    }
+    .button.primary:hover {
+      box-shadow: 0 22px 48px rgba(75, 103, 255, 0.26);
+    }
+    .features {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 1.35rem;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: 0 20px 70px rgba(1, 11, 28, 0.16);
+    }
+    .feature-card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+    .feature-card p {
+      margin: 0;
+      color: #bec6f5;
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+    .repos-panel {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 1.2rem;
+    }
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 0 0 1rem;
+      flex-wrap: wrap;
+    }
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+    }
+    .section-heading small {
+      color: #b7c1ff;
+    }
+    .repo-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .repo-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(12, 18, 38, 0.88);
+      transition: transform 0.24s ease, border-color 0.24s ease;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(12px);
+    }
+    .repo-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(111,125,255,0.25);
+    }
+    .repo-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(111,125,255,0.08), transparent 35%);
+      pointer-events: none;
+    }
+    .repo-card a {
+      color: inherit;
+      text-decoration: none;
+      display: block;
+      padding: 1.45rem 1.6rem 1.55rem;
+      position: relative;
+      z-index: 1;
+    }
+    .repo-card h3 {
+      margin: 0 0 0.65rem;
+      font-size: 1.1rem;
+      letter-spacing: -0.03em;
+    }
+    .repo-card p {
+      margin: 0;
+      color: #d9ddff;
+      min-height: 3.3rem;
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+    .repo-meta {
+      margin-top: 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      color: #96a1ff;
+      font-size: 0.95rem;
+    }
+    .repo-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+    }
+    .repo-pill span {
+      display: inline-flex;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #8fa3ff;
+    }
+    .status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+      color: #a7b1ff;
+      font-size: 0.92rem;
+    }
+    .status-bar span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .loader {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.95rem 1.25rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #c8d0ff;
+      font-size: 0.96rem;
+      width: fit-content;
+    }
+    .loader::after {
+      content: "";
+      width: 0.9rem;
+      height: 0.9rem;
+      border: 2px solid rgba(255,255,255,0.22);
+      border-top-color: #8ca5ff;
+      border-radius: 999px;
+      animation: spin 1.2s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .global-notice {
+      text-align: center;
+      padding: 0.95rem 1rem;
+      margin: 0 auto;
+      max-width: 820px;
+      border-radius: 18px;
+      background: rgba(12, 18, 38, 0.72);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #d6dbff;
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+    .glow-circle {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .glow-circle.one { top: -220px; right: -140px; background: #6f7dff; }
+    .glow-circle.two { bottom: -180px; left: -120px; background: #00d3ff; }
+    .glow-circle.three { top: 40%; left: -260px; background: #ff5fc1; opacity: 0.18; }
+    .blur-panel {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.05), transparent 25%);
+      mix-blend-mode: screen;
+    }
+    @media (max-width: 720px) {
+      .hero { padding: 2rem 1.4rem; }
+      .repo-card a { padding: 1.25rem 1.15rem 1.35rem; }
+    }
+  </style>
+</head>
 <body>
-  <h1>Repositories</h1>
-  <ul>
-    <li><a href="https://warecario.github.io">Openclaw-Extensions</a></li>
-    <li><a href="https://github.com/Warecario/Power-Armor-HUD">Power-Armor-HUD</a></li>
-    <li><a href="https://github.com/chromium112/openchrome-extentions/tree/main">OpenChrome-Extensions</a></li>
-  </ul>
+  <div class="page-shell">
+    <div class="glow-circle one"></div>
+    <div class="glow-circle two"></div>
+    <div class="glow-circle three"></div>
+    <div class="blur-panel"></div>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow"><span></span>Warecario Projects</div>
+        <h1>Auto-updating GitHub gallery built for a polished showcase.</h1>
+        <p>
+          Discover the latest repositories from <strong>Warecario</strong> with live GitHub data, smooth interactions, and a refined visual experience inspired by modern docs and portfolio pages.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="https://github.com/Warecario" target="_blank" rel="noreferrer">View GitHub Profile</a>
+          <button class="button" id="refreshButton" type="button">Refresh repos</button>
+        </div>
+        <div class="features">
+          <div class="feature-card">
+            <h3>Live repository feed</h3>
+            <p>Automatically loads the most recently updated public repositories from GitHub every time the page opens.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Styled like a docs site</h3>
+            <p>Glassmorphism, motion accents, and crisp typography create a futuristic landing page feel.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Fast and interactive</h3>
+            <p>Search-free browsing with quick links, hover effects, and metadata for stars, languages, and last update times.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="repos-panel">
+      <div class="section-heading">
+        <div>
+          <h2>Featured repositories</h2>
+          <small>Latest public work from the Warecario GitHub account.</small>
+        </div>
+        <div class="loader" id="repoStatus">Loading repository data...</div>
+      </div>
+      <div class="global-notice" id="globalNotice">
+        This page uses live GitHub data. If your repositories do not appear immediately, GitHub API rate limits may be active for anonymous requests.
+      </div>
+      <div class="repo-grid" id="repoGrid"></div>
+    </section>
+  </div>
+  <script>
+    const username = 'Warecario';
+    const repoGrid = document.getElementById('repoGrid');
+    const repoStatus = document.getElementById('repoStatus');
+    const notice = document.getElementById('globalNotice');
+    const refreshButton = document.getElementById('refreshButton');
+
+    async function fetchRepos() {
+      const endpoint = `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`;
+      repoStatus.textContent = 'Fetching latest repos...';
+      try {
+        const response = await fetch(endpoint, { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error(`GitHub API returned ${response.status}`);
+        }
+        const repos = await response.json();
+        const filtered = repos
+          .filter(repo => !repo.fork && repo.private === false)
+          .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+          .slice(0, 12);
+        if (!filtered.length) {
+          repoGrid.innerHTML = '<p style="color:#c9d2ff;">No public repositories available right now.</p>';
+          repoStatus.textContent = 'No repos found.';
+          return;
+        }
+        renderRepos(filtered);
+        repoStatus.textContent = `Showing ${filtered.length} repositories.`;
+      } catch (error) {
+        repoGrid.innerHTML = `
+          <div class="repo-card">
+            <a href="https://github.com/${username}" target="_blank" rel="noreferrer">
+              <h3>Unable to load live repos</h3>
+              <p>GitHub API access failed. Try again in a moment, or visit the profile directly.</p>
+              <div class="repo-meta">
+                <span class="repo-pill"><span></span>Error</span>
+              </div>
+            </a>
+          </div>
+        `;
+        repoStatus.textContent = 'Live update unavailable.';
+        notice.textContent = 'GitHub API requests are rate limited for anonymous browsing. Refresh the page or add a personal access token if needed.';
+        console.error(error);
+      }
+    }
+
+    function renderRepos(repos) {
+      repoGrid.innerHTML = repos.map(repo => {
+        const description = repo.description ? repo.description : 'No description provided.';
+        const languageLabel = repo.language ? repo.language : 'Unknown';
+        const updated = new Date(repo.updated_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+        return `
+          <div class="repo-card">
+            <a href="${repo.html_url}" target="_blank" rel="noreferrer">
+              <h3>${repo.name}</h3>
+              <p>${description}</p>
+              <div class="repo-meta">
+                <span class="repo-pill"><span></span>${languageLabel}</span>
+                <span class="repo-pill"><span></span>★ ${repo.stargazers_count}</span>
+                <span class="repo-pill"><span></span>Forks ${repo.forks_count}</span>
+              </div>
+              <div class="status-bar">
+                <span>Updated ${updated}</span>
+                <span>${repo.watchers_count} watchers</span>
+              </div>
+            </a>
+          </div>
+        `;
+      }).join('');
+    }
+
+    refreshButton.addEventListener('click', () => {
+      fetchRepos();
+      refreshButton.classList.add('button--active');
+      setTimeout(() => refreshButton.classList.remove('button--active'), 300);
+    });
+
+    fetchRepos();
+  </script>
 </body>
 </html>
