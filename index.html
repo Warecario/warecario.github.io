@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Warecario • GitHub Projects</title>
-  <meta name="description" content="Dynamic GitHub repository gallery for Warecario with live updates and a polished visual style." />
+  <title>Warecario GitHub Projects</title>
+  <meta name="description" content="A simple GitHub repo showcase page for Warecario, using live data and a clean layout." />
   <style>
     :root {
       color-scheme: dark;
-      color: #f3f4ff;
-      background: #070b18;
+      color: #e6e9ff;
+      background: #0b101f;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-smooth: always;
       text-rendering: optimizeLegibility;
@@ -24,9 +24,7 @@
       padding: 0;
     }
     body {
-      background: radial-gradient(circle at top, rgba(94, 97, 255, 0.22), transparent 22%),
-                  radial-gradient(circle at 20% 30%, rgba(0, 250, 255, 0.16), transparent 18%),
-                  linear-gradient(180deg, #02040a 0%, #0c1126 100%);
+      background: linear-gradient(180deg, #08101f 0%, #0c1223 100%);
       overflow-x: hidden;
     }
     .page-shell {
@@ -41,11 +39,11 @@
       max-width: 1080px;
       margin: 0 auto;
       padding: 2.5rem;
-      border-radius: 32px;
-      background: rgba(10, 16, 33, 0.82);
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.22);
-      backdrop-filter: blur(18px);
+      border-radius: 28px;
+      background: rgba(12, 18, 34, 0.92);
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(14px);
       position: relative;
       overflow: hidden;
     }
@@ -53,8 +51,8 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 10% 10%, rgba(121, 84, 255, 0.21), transparent 25%),
-                  radial-gradient(circle at 85% 20%, rgba(0, 245, 255, 0.16), transparent 18%);
+      background: radial-gradient(circle at 15% 15%, rgba(94, 97, 255, 0.12), transparent 18%),
+                  radial-gradient(circle at 85% 20%, rgba(0, 245, 255, 0.1), transparent 16%);
       pointer-events: none;
     }
     .hero-content {
@@ -80,22 +78,22 @@
     }
     h1 {
       margin: 0;
-      font-size: clamp(2.8rem, 5vw, 4.6rem);
+      font-size: clamp(2.5rem, 5vw, 4rem);
       letter-spacing: -0.04em;
       max-width: 12ch;
     }
     .hero p {
       margin: 1.4rem 0 0;
-      max-width: 760px;
+      max-width: 700px;
       color: #cfd7ff;
       font-size: 1.05rem;
-      line-height: 1.85;
+      line-height: 1.8;
     }
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-top: 2rem;
+      margin-top: 1.8rem;
     }
     .button {
       display: inline-flex;
@@ -104,27 +102,24 @@
       min-height: 3rem;
       padding: 0 1.35rem;
       border-radius: 14px;
-      border: 1px solid transparent;
+      border: 1px solid rgba(255,255,255,0.08);
       font-weight: 600;
       text-decoration: none;
-      transition: transform 0.24s ease, background-color 0.24s ease, border-color 0.24s ease;
+      transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
       cursor: pointer;
       color: inherit;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
     }
     .button:hover {
       transform: translateY(-1px);
-      background: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.12);
     }
     .button.primary {
       color: #ffffff;
-      background: linear-gradient(135deg, #6f7dff 0%, #00d3ff 100%);
-      border-color: rgba(111,125,255,0.5);
-      box-shadow: 0 18px 40px rgba(75, 103, 255, 0.18);
-    }
-    .button.primary:hover {
-      box-shadow: 0 22px 48px rgba(75, 103, 255, 0.26);
+      background: linear-gradient(135deg, #5f75ff 0%, #27c6ff 100%);
+      border-color: rgba(95,117,255,0.4);
+      box-shadow: 0 14px 32px rgba(26, 59, 170, 0.18);
     }
     .features {
       display: grid;
@@ -133,16 +128,16 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
     .feature-card {
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 22px;
+      border-radius: 20px;
       padding: 1.35rem;
-      min-height: 160px;
+      min-height: 150px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 1rem;
-      box-shadow: 0 20px 70px rgba(1, 11, 28, 0.16);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
     }
     .feature-card h3 {
       margin: 0;
@@ -150,9 +145,9 @@
     }
     .feature-card p {
       margin: 0;
-      color: #bec6f5;
+      color: #b8c0f1;
       font-size: 0.98rem;
-      line-height: 1.7;
+      line-height: 1.65;
     }
     .repos-panel {
       max-width: 1200px;
@@ -170,7 +165,7 @@
     }
     .section-heading h2 {
       margin: 0;
-      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-size: clamp(2rem, 3vw, 2.6rem);
     }
     .section-heading small {
       color: #b7c1ff;
@@ -183,57 +178,57 @@
     .repo-card {
       position: relative;
       overflow: hidden;
-      border-radius: 26px;
+      border-radius: 24px;
       border: 1px solid rgba(255,255,255,0.07);
-      background: rgba(12, 18, 38, 0.88);
-      transition: transform 0.24s ease, border-color 0.24s ease;
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
-      backdrop-filter: blur(12px);
+      background: rgba(10, 16, 29, 0.9);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(10px);
     }
     .repo-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(111,125,255,0.25);
+      transform: translateY(-3px);
+      border-color: rgba(95,117,255,0.18);
     }
     .repo-card::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(111,125,255,0.08), transparent 35%);
+      background: linear-gradient(135deg, rgba(95,117,255,0.06), transparent 30%);
       pointer-events: none;
     }
     .repo-card a {
       color: inherit;
       text-decoration: none;
       display: block;
-      padding: 1.45rem 1.6rem 1.55rem;
+      padding: 1.35rem 1.5rem 1.45rem;
       position: relative;
       z-index: 1;
     }
     .repo-card h3 {
-      margin: 0 0 0.65rem;
-      font-size: 1.1rem;
+      margin: 0 0 0.55rem;
+      font-size: 1.08rem;
       letter-spacing: -0.03em;
     }
     .repo-card p {
       margin: 0;
-      color: #d9ddff;
-      min-height: 3.3rem;
-      font-size: 0.98rem;
-      line-height: 1.7;
+      color: #d8dcff;
+      min-height: 3.2rem;
+      font-size: 0.97rem;
+      line-height: 1.75;
     }
     .repo-meta {
-      margin-top: 1.2rem;
+      margin-top: 1.15rem;
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
-      color: #96a1ff;
+      color: #94a0ff;
       font-size: 0.95rem;
     }
     .repo-pill {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      padding: 0.45rem 0.75rem;
+      padding: 0.4rem 0.75rem;
       border-radius: 999px;
       background: rgba(255,255,255,0.05);
     }
@@ -251,7 +246,7 @@
       gap: 1rem;
       flex-wrap: wrap;
       margin-top: 0.75rem;
-      color: #a7b1ff;
+      color: #a6afe3;
       font-size: 0.92rem;
     }
     .status-bar span {
@@ -297,21 +292,21 @@
     }
     .glow-circle {
       position: absolute;
-      width: 520px;
-      height: 520px;
+      width: 380px;
+      height: 380px;
       border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.55;
+      filter: blur(80px);
+      opacity: 0.35;
       pointer-events: none;
     }
-    .glow-circle.one { top: -220px; right: -140px; background: #6f7dff; }
-    .glow-circle.two { bottom: -180px; left: -120px; background: #00d3ff; }
-    .glow-circle.three { top: 40%; left: -260px; background: #ff5fc1; opacity: 0.18; }
+    .glow-circle.one { top: -200px; right: -130px; background: #5f75ff; }
+    .glow-circle.two { bottom: -160px; left: -100px; background: #27c6ff; }
+    .glow-circle.three { top: 35%; left: -220px; background: #ff6da8; opacity: 0.12; }
     .blur-panel {
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.05), transparent 25%);
+      background: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.04), transparent 25%);
       mix-blend-mode: screen;
     }
     @media (max-width: 720px) {
@@ -329,27 +324,27 @@
 
     <section class="hero">
       <div class="hero-content">
-        <div class="eyebrow"><span></span>Warecario Projects</div>
-        <h1>Auto-updating GitHub gallery built for a polished showcase.</h1>
+        <div class="eyebrow"><span></span>Made by Warecario</div>
+        <h1>Some of my GitHub projects.</h1>
         <p>
-          Discover the latest repositories from <strong>Warecario</strong> with live GitHub data, smooth interactions, and a refined visual experience inspired by modern docs and portfolio pages.
+          A simple page to show the latest public repositories on the Warecario GitHub account. It updates live from GitHub and keeps things easy to scan.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href="https://github.com/Warecario" target="_blank" rel="noreferrer">View GitHub Profile</a>
-          <button class="button" id="refreshButton" type="button">Refresh repos</button>
+          <a class="button primary" href="https://github.com/Warecario" target="_blank" rel="noreferrer">Visit GitHub</a>
+          <button class="button" id="refreshButton" type="button">Reload repos</button>
         </div>
         <div class="features">
           <div class="feature-card">
-            <h3>Live repository feed</h3>
-            <p>Automatically loads the most recently updated public repositories from GitHub every time the page opens.</p>
+            <h3>Live GitHub data</h3>
+            <p>Shows the latest public repos with stars, languages, and update times.</p>
           </div>
           <div class="feature-card">
-            <h3>Styled like a docs site</h3>
-            <p>Glassmorphism, motion accents, and crisp typography create a futuristic landing page feel.</p>
+            <h3>Easy layout</h3>
+            <p>Designed to feel clean and straightforward, not too flashy.</p>
           </div>
           <div class="feature-card">
-            <h3>Fast and interactive</h3>
-            <p>Search-free browsing with quick links, hover effects, and metadata for stars, languages, and last update times.</p>
+            <h3>Simple controls</h3>
+            <p>One button to refresh, one place to jump to the profile.</p>
           </div>
         </div>
       </div>
@@ -364,7 +359,7 @@
         <div class="loader" id="repoStatus">Loading repository data...</div>
       </div>
       <div class="global-notice" id="globalNotice">
-        This page uses live GitHub data. If your repositories do not appear immediately, GitHub API rate limits may be active for anonymous requests.
+        Live GitHub data powers this page. If the list does not appear right away, it may be due to anonymous GitHub API limits.
       </div>
       <div class="repo-grid" id="repoGrid"></div>
     </section>
@@ -400,16 +395,16 @@
         repoGrid.innerHTML = `
           <div class="repo-card">
             <a href="https://github.com/${username}" target="_blank" rel="noreferrer">
-              <h3>Unable to load live repos</h3>
-              <p>GitHub API access failed. Try again in a moment, or visit the profile directly.</p>
+              <h3>Could not load repos</h3>
+              <p>GitHub API access did not succeed. Refresh later or open the GitHub profile directly.</p>
               <div class="repo-meta">
                 <span class="repo-pill"><span></span>Error</span>
               </div>
             </a>
           </div>
         `;
-        repoStatus.textContent = 'Live update unavailable.';
-        notice.textContent = 'GitHub API requests are rate limited for anonymous browsing. Refresh the page or add a personal access token if needed.';
+        repoStatus.textContent = 'Unable to load repository list.';
+        notice.textContent = 'GitHub API anonymous requests can hit limits. Refresh the page or try again later.';
         console.error(error);
       }
     }
