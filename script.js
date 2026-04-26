@@ -48,10 +48,11 @@ function renderRepos(repos) {
     const description = repo.description ? repo.description : 'No description.';
     const languageLabel = repo.language ? repo.language : 'Unknown';
     const updated = new Date(repo.updated_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    const linkUrl = repo.pages && repo.pages.url ? repo.pages.url : repo.html_url;
 
     return `
       <li class="repo-item">
-        <a href="${repo.html_url}" target="_blank" rel="noreferrer">
+        <a href="${linkUrl}" target="_blank" rel="noreferrer">
           <h3>${repo.name}</h3>
           <p>${description}</p>
           <div class="repo-meta">
