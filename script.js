@@ -17,7 +17,7 @@ async function fetchRepos() {
       .filter(repo => !repo.fork && repo.private === false)
       .filter(repo => !ignored.includes(repo.name.toLowerCase()))
       .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
-      .slice(0, 12);
+      .slice(0, 20);
 
     if (!filtered.length) {
       repoGrid.innerHTML = '<div class="repo-item">No public repositories available right now.</div>';
@@ -45,23 +45,12 @@ function renderRepos(repos) {
   repoGrid.innerHTML = repos.map(repo => {
     const description = repo.description || 'No description.';
     const updated = new Date(repo.updated_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-    const language = repo.language || 'Unknown';
-    const stars = repo.stargazers_count || 0;
 
     return `
       <div class="repo-item">
         <a href="${repo.html_url}" target="_blank" rel="noreferrer">
           <h3>${repo.name}</h3>
           <p>${description}</p>
-          <div class="repo-meta">
-            <div class="repo-pill">
-              <span></span>
-              ${language}
-            </div>
-            <div class="repo-pill">
-              ⭐ ${stars}
-            </div>
-          </div>
           <div class="status-bar">Updated ${updated}</div>
         </a>
       </div>
