@@ -41,15 +41,28 @@ function renderRepos(repos) {
   repoGrid.innerHTML = repos.map(repo => {
     const description = repo.description ? repo.description : 'No description.';
     const updated = new Date(repo.updated_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    const language = repo.language ? repo.language : 'Unknown';
+    const stars = repo.stargazers_count || 0;
 
     return `
       <div class="repo-item">
         <a href="${repo.html_url}" target="_blank" rel="noreferrer">
           <h3>${repo.name}</h3>
           <p>${description}</p>
+          <div class="repo-meta">
+            <div class="repo-pill">
+              <span></span>
+              ${language}
+            </div>
+            <div class="repo-pill">
+              ⭐ ${stars}
+            </div>
+          </div>
           <div class="status-bar">Updated ${updated}</div>
         </a>
       </div>
     `;
   }).join('');
 }
+
+fetchRepos();
