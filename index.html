@@ -111,33 +111,6 @@
       background: #2563eb;
       border-color: #2563eb;
     }
-    .features {
-      display: grid;
-      gap: 1rem;
-      margin-top: 1.3rem;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-    .feature-card {
-      background: #172133;
-      border: 1px solid #1f2937;
-      border-radius: 14px;
-      padding: 1rem;
-      min-height: 120px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
-    .feature-card h3 {
-      margin: 0;
-      font-size: 1rem;
-    }
-    .feature-card p {
-      margin: 0;
-      color: #cbd5e1;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
     .repos-panel {
       max-width: 1200px;
       margin: 0 auto;
@@ -154,10 +127,7 @@
     }
     .section-heading h2 {
       margin: 0;
-      font-size: clamp(2rem, 3vw, 2.6rem);
-    }
-    .section-heading small {
-      color: #b7c1ff;
+      font-size: clamp(2rem, 3vw, 2.4rem);
     }
     .repo-grid {
       display: grid;
@@ -294,39 +264,19 @@
         <div class="eyebrow"><span></span>Made by Warecario</div>
         <h1>My GitHub repos</h1>
         <p>
-          Here are the most recent public repositories from the Warecario GitHub account. No nonsense, just links and basic info.
+          Latest public repos from Warecario. Simple and easy to scan.
         </p>
         <div class="hero-actions">
           <a class="button primary" href="https://github.com/Warecario" target="_blank" rel="noreferrer">Visit GitHub</a>
           <button class="button" id="refreshButton" type="button">Reload repos</button>
-        </div>
-        <div class="features">
-          <div class="feature-card">
-            <h3>Live GitHub data</h3>
-            <p>Shows the latest public repos with stars, languages, and update times.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Easy layout</h3>
-            <p>Designed to feel clean and straightforward, not too flashy.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Simple controls</h3>
-            <p>One button to refresh, one place to jump to the profile.</p>
-          </div>
         </div>
       </div>
     </section>
 
     <section class="repos-panel">
       <div class="section-heading">
-        <div>
-          <h2>Featured repositories</h2>
-          <small>Latest public work from the Warecario GitHub account.</small>
-        </div>
-        <div class="loader" id="repoStatus">Loading repository data...</div>
-      </div>
-      <div class="global-notice" id="globalNotice">
-        Live GitHub data powers this page. If the list does not appear right away, it may be due to anonymous GitHub API limits.
+        <h2>Repos</h2>
+        <div class="loader" id="repoStatus">Loading repos...</div>
       </div>
       <div class="repo-grid" id="repoGrid"></div>
     </section>
