@@ -25,8 +25,13 @@ async function fetchRepos() {
       return;
     }
 
+    const reposWithPages = await Promise.all(filtered.map(async repo => ({
+      ...repo,
+      displayLink: await getRepoPageLink(repo)
+    })));
+
     if (repoStatus) repoStatus.style.display = 'none';
-    renderRepos(filtered);
+    renderRepos(reposWithPages);
   } catch (error) {
     if (repoStatus) repoStatus.textContent = '⚠ Failed to load repos';
     repoGrid.innerHTML = `
@@ -41,14 +46,34 @@ async function fetchRepos() {
   }
 }
 
+async function getRepoPageLink(repo) {
+  if (!repo.has_pages) {
+    return repo.html_url;
+  }
+
+  const pageUrl = `https://${username.toLowerCase()}.github.io/${repo.name}`;
+
+  try {
+    const response = await fetch(pageUrl, { method: 'HEAD' });
+    if (response.ok) {
+      return pageUrl;
+    }
+  } catch (error) {
+    // ignore page check errors and fall back to GitHub link
+  }
+
+  return repo.html_url;
+}
+
 function renderRepos(repos) {
   repoGrid.innerHTML = repos.map(repo => {
     const description = repo.description || 'No description.';
     const updated = new Date(repo.updated_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    const link = repo.displayLink || repo.html_url;
 
     return `
       <div class="repo-item">
-        <a href="${repo.html_url}" target="_blank" rel="noreferrer">
+        <a href="${link}" target="_blank" rel="noreferrer">
           <h3>${repo.name}</h3>
           <p>${description}</p>
           <div class="status-bar">Updated ${updated}</div>
