@@ -47,16 +47,11 @@ async function fetchRepos() {
 }
 
 async function getRepoPageLink(repo) {
-  const pageUrl = `https://${username.toLowerCase()}.github.io/${repo.name}`;
-  const pagesEndpoint = `https://api.github.com/repos/${username}/${repo.name}/pages`;
+  const homepageUrl = repo.homepage ? repo.homepage.trim() : '';
+  const siteRoot = `https://${username.toLowerCase()}.github.io/`;
 
-  try {
-    const response = await fetch(pagesEndpoint);
-    if (response.ok) {
-      return pageUrl;
-    }
-  } catch (error) {
-    // ignore page check errors and fall back to GitHub link
+  if (homepageUrl && homepageUrl.startsWith(siteRoot)) {
+    return homepageUrl.replace(/\/+$/, '');
   }
 
   return repo.html_url;
