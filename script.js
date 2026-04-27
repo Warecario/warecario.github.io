@@ -47,14 +47,11 @@ async function fetchRepos() {
 }
 
 async function getRepoPageLink(repo) {
-  if (!repo.has_pages) {
-    return repo.html_url;
-  }
-
   const pageUrl = `https://${username.toLowerCase()}.github.io/${repo.name}`;
+  const pagesEndpoint = `https://api.github.com/repos/${username}/${repo.name}/pages`;
 
   try {
-    const response = await fetch(pageUrl, { method: 'HEAD' });
+    const response = await fetch(pagesEndpoint);
     if (response.ok) {
       return pageUrl;
     }
