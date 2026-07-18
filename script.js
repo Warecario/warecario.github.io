@@ -25,10 +25,11 @@ async function fetchRepos() {
       return;
     }
 
-    const reposWithPages = await Promise.all(filtered.map(async repo => ({
+    // Simplified to a standard synchronous map since getRepoPageLink no longer needs await
+    const reposWithPages = filtered.map(repo => ({
       ...repo,
-      displayLink: await getRepoPageLink(repo)
-    })));
+      displayLink: getRepoPageLink(repo)
+    }));
 
     if (repoStatus) repoStatus.style.display = 'none';
     renderRepos(reposWithPages);
@@ -46,14 +47,13 @@ async function fetchRepos() {
   }
 }
 
-async function getRepoPageLink(repo) {
-  const homepageUrl = repo.homepage ? repo.homepage.trim() : '';
-  const siteRoot = `https://${username.toLowerCase()}.github.io/`;
-
-  if (homepageUrl && homepageUrl.startsWith(siteRoot)) {
-    return homepageUrl.replace(/\/+$/, '');
+function getRepoPageLink(repo) {
+  // Check the built-in GitHub API property to see if a page exists
+  if (repo.has_pages) {
+    return `https://${username.toLowerCase()}.github.io/${repo.name}`;
   }
 
+  // Fallback to the standard repository URL
   return repo.html_url;
 }
 
